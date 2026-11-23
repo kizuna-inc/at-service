@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 420" fill="none">
+  <rect width="480" height="420" rx="20" fill="#163a5c" />
+  <circle cx="410" cy="64" r="56" fill="#14b8a6" fill-opacity="0.14" />
+  <circle cx="72" cy="360" r="68" fill="#0d8a94" fill-opacity="0.18" />
+
+  <!-- Top mockup bar -->
+  <rect x="32" y="28" width="416" height="44" rx="12" fill="#0f2942" />
+  <circle cx="56" cy="50" r="6" fill="#14b8a6" />
+  <rect x="74" y="44" width="110" height="12" rx="6" fill="#ffffff" fill-opacity="0.88" />
+  <rect x="356" y="42" width="72" height="16" rx="8" fill="#0d8a94" />
+
+  <!-- Main dashboard preview card -->
+  <rect x="32" y="88" width="416" height="196" rx="14" fill="#ffffff" />
+  <rect x="52" y="108" width="144" height="14" rx="7" fill="#0f2942" />
+  <rect x="52" y="130" width="210" height="10" rx="5" fill="#64748b" fill-opacity="0.55" />
+
+  <!-- Status pill -->
+  <rect x="336" y="106" width="92" height="24" rx="12" fill="#e6f6ec" />
+  <circle cx="352" cy="118" r="4" fill="#16a34a" />
+  <rect x="364" y="114" width="50" height="8" rx="4" fill="#15803d" />
+
+  <!-- Progress / metric tiles -->
+  <rect x="52" y="158" width="180" height="104" rx="10" fill="#ebf7f9" stroke="#7dd3dc" stroke-width="1.5" />
+  <circle cx="80" cy="186" r="14" fill="#0d8a94" />
+  <path d="M74 186l4 4 8-8" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  <rect x="104" y="178" width="96" height="10" rx="5" fill="#0f2942" />
+  <rect x="104" y="194" width="68" height="8" rx="4" fill="#64748b" fill-opacity="0.7" />
+  <rect x="68" y="220" width="148" height="10" rx="5" fill="#dce7ed" />
+  <rect x="68" y="220" width="104" height="10" rx="5" fill="#14b8a6" />
+  <rect x="68" y="238" width="84" height="8" rx="4" fill="#0d8a94" fill-opacity="0.7" />
+
+  <rect x="248" y="158" width="180" height="104" rx="10" fill="#f4f8fa" stroke="#dce7ed" stroke-width="1.5" />
+  <circle cx="276" cy="186" r="14" fill="#1d74f5" />
+  <rect x="270" y="182" width="12" height="8" rx="2" fill="#ffffff" />
+  <rect x="300" y="178" width="96" height="10" rx="5" fill="#0f2942" />
+  <rect x="300" y="194" width="76" height="8" rx="4" fill="#64748b" fill-opacity="0.7" />
+  <rect x="264" y="220" width="148" height="8" rx="4" fill="#dce7ed" />
+  <rect x="264" y="236" width="112" height="8" rx="4" fill="#dce7ed" />
+
+  <!-- Bottom accessibility quick-strip -->
+  <rect x="32" y="300" width="416" height="88" rx="14" fill="#0f2942" />
+  <rect x="52" y="320" width="128" height="10" rx="5" fill="#ffffff" fill-opacity="0.9" />
+  <rect x="52" y="338" width="168" height="8" rx="4" fill="#14b8a6" fill-opacity="0.85" />
+
+  <!-- 4 a11y accent circles matching index.css tokens -->
+  <circle cx="272" cy="344" r="18" fill="#1d74f5" />
+  <circle cx="320" cy="344" r="18" fill="#0d9488" />
+  <circle cx="368" cy="344" r="18" fill="#f97316" />
+  <circle cx="416" cy="344" r="18" fill="#7c3aed" />
+</svg>

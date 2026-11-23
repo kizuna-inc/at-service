@@ -1,11 +1,13 @@
-import { I18nProvider } from "./modules/i18n"
+import { I18nextProvider } from "react-i18next"
+
+import { i18n } from "./modules/i18n"
 import { Router } from "./Router"
 
 const App = () => {
   return (
-    <I18nProvider>
+    <I18nextProvider i18n={i18n}>
       <Router />
-    </I18nProvider>
+    </I18nextProvider>
   )
 }
 

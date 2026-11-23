@@ -7,6 +7,6 @@ export interface loginDetailInterface {
   username: string;
   detail: {
     name: string;
-    role: "user" | "admin";
+    role: "user" | "admin" | "staff";
   };
 }
