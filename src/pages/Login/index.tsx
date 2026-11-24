@@ -130,18 +130,9 @@ export const Login = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <Label htmlFor="password" className="text-text-primary">
-                        {t("login.password")}
-                      </Label>
-                      <button
-                        type="button"
-                        onClick={() => navigate("/forgot-password")}
-                        className="font-medium text-primary hover:text-primary-hover text-xs hover:underline cursor-pointer"
-                      >
-                        {t("login.forgotPassword")}
-                      </button>
-                    </div>
+                    <Label htmlFor="password" className="text-text-primary">
+                      {t("login.password")}
+                    </Label>
                     <div className="relative">
                       <Input
                         id="password"
@@ -169,6 +160,15 @@ export const Login = () => {
                           <Eye className="size-4" />
                         )}
                       </Button>
+                    </div>
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => navigate("/forgot-password")}
+                        className="font-medium text-primary hover:text-primary-hover text-xs hover:underline cursor-pointer"
+                      >
+                        {t("login.forgotPassword")}
+                      </button>
                     </div>
                   </div>
 
