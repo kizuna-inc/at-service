@@ -105,7 +105,7 @@ export const Navbar = () => {
             className="hover:bg-brand-navy-hover text-text-inverse hover:text-text-inverse cursor-pointer"
           >
             <Globe className="size-4" />
-            <span>{locale.toUpperCase()}</span>
+            <span>{locale === "en" ? "TH" : "EN"}</span>
           </Button>
           <AccessibilityMenu />
           {!isLoggedIn ? (
@@ -135,7 +135,7 @@ export const Navbar = () => {
                 type="button"
                 size="sm"
                 onClick={handleLogout}
-                className="flex justify-center items-center bg-danger-text hover:bg-danger-text/90 min-w-22 text-text-inverse cursor-pointer"
+                className="flex justify-center items-center bg-danger-text hover:bg-danger-text/90 w-31.25 min-w-22 text-text-inverse cursor-pointer"
               >
                 <LogOut className="size-4" />
                 <span>{t("nav.logout")}</span>

@@ -1,5 +1,6 @@
 import {
   BarChart2,
+  BookOpen,
   Calendar,
   ClipboardCheck,
   LayoutDashboard,
@@ -41,6 +42,11 @@ export const StaffDashboard = () => {
       to: "/dashboard/staff/schedule",
       label: t("dashboard.staff.menu.schedule"),
       icon: Calendar,
+    },
+    {
+      to: "/dashboard/staff/knowledge",
+      label: t("dashboard.staff.menu.knowledge"),
+      icon: BookOpen,
     },
     {
       to: "/dashboard/staff/reports",

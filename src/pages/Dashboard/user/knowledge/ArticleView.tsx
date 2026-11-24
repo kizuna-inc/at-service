@@ -9,10 +9,14 @@ import { getKnowledgeArticleById } from "@/modules/api/mock/knowledge";
 import type { Locale } from "@/modules/i18n";
 import type { KnowledgeArticle } from "@/modules/interface/api/knowledge";
 
+import { useDashboardUser } from "../..";
+
 export const KnowledgeArticleView = () => {
   const { articleId } = useParams<{ articleId: string }>();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const user = useDashboardUser();
+  const basePath = `/dashboard/${user.detail.role}/knowledge`;
   const locale: Locale = i18n.language === "en" ? "en" : "th";
   const [result, setResult] = useState<{
     id: string;
@@ -45,7 +49,7 @@ export const KnowledgeArticleView = () => {
         type="button"
         variant="ghost"
         size="sm"
-        onClick={() => navigate("/dashboard/user/knowledge")}
+        onClick={() => navigate(basePath)}
         className="hover:bg-primary-light -ml-2 text-text-primary cursor-pointer"
       >
         <ArrowLeft className="size-4" />

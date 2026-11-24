@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Search } from "lucide-react";
+import { BookOpen, Plus, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -10,10 +10,16 @@ import { getKnowledgeArticles } from "@/modules/api/mock/knowledge";
 import type { Locale } from "@/modules/i18n";
 import type { KnowledgeArticle } from "@/modules/interface/api/knowledge";
 
+import { useDashboardUser } from "../..";
+
 export const KnowledgeView = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const user = useDashboardUser();
   const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const basePath = `/dashboard/${user.detail.role}/knowledge`;
+  const canCreate =
+    user.detail.role === "staff" || user.detail.role === "admin";
   const [query, setQuery] = useState("");
   const [articles, setArticles] = useState<KnowledgeArticle[]>([]);
 
@@ -41,13 +47,25 @@ export const KnowledgeView = () => {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="font-bold text-text-primary text-2xl">
-          {t("dashboard.user.pages.knowledge.title")}
-        </h1>
-        <p className="mt-1 text-text-muted text-sm">
-          {t("dashboard.user.pages.knowledge.subtitle")}
-        </p>
+      <div className="flex flex-wrap justify-between items-start gap-3">
+        <div>
+          <h1 className="font-bold text-text-primary text-2xl">
+            {t("dashboard.user.pages.knowledge.title")}
+          </h1>
+          <p className="mt-1 text-text-muted text-sm">
+            {t("dashboard.user.pages.knowledge.subtitle")}
+          </p>
+        </div>
+        {canCreate && (
+          <Button
+            type="button"
+            onClick={() => navigate(`${basePath}/new`)}
+            className="bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
+          >
+            <Plus className="size-4" />
+            <span>{t("dashboard.user.pages.knowledge.addGuide")}</span>
+          </Button>
+        )}
       </div>
 
       <div className="relative max-w-md">
@@ -95,9 +113,7 @@ export const KnowledgeView = () => {
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={() =>
-                    navigate(`/dashboard/user/knowledge/${article.id}`)
-                  }
+                  onClick={() => navigate(`${basePath}/${article.id}`)}
                   className="hover:bg-primary-light border-border-input text-text-primary cursor-pointer"
                 >
                   {t("dashboard.user.pages.knowledge.readGuide")}

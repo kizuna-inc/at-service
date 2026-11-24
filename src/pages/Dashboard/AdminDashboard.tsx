@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  BookOpen,
   Laptop,
   LayoutDashboard,
   Settings,
@@ -41,6 +42,11 @@ export const AdminDashboard = () => {
       to: "/dashboard/admin/devices",
       label: t("dashboard.admin.menu.devices"),
       icon: Laptop,
+    },
+    {
+      to: "/dashboard/admin/knowledge",
+      label: t("dashboard.admin.menu.knowledge"),
+      icon: BookOpen,
     },
     {
       to: "/dashboard/admin/reports",
