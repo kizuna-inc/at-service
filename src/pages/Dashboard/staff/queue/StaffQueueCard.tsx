@@ -3,26 +3,21 @@ import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Locale } from "@/modules/i18n";
+import type {
+  StaffQueueItem,
+  StaffQueueStatus,
+} from "@/modules/interface/api/dashboard";
 
-type QueueStatus = "pending" | "inProgress" | "completed";
-
-const STATUS_BADGE_MAP: Record<QueueStatus, string> = {
+const STATUS_BADGE_MAP: Record<StaffQueueStatus, string> = {
   pending: "bg-warning-bg text-warning-text border border-warning-border",
   inProgress: "bg-info-bg text-info-text",
   completed: "bg-success-bg text-success-text",
 };
 
-export const StaffQueueCard = () => {
-  const { t } = useTranslation();
-
-  const queueItems: {
-    key: "item1" | "item2" | "item3";
-    status: QueueStatus;
-  }[] = [
-    { key: "item1", status: "pending" },
-    { key: "item2", status: "inProgress" },
-    { key: "item3", status: "completed" },
-  ];
+export const StaffQueueCard = ({ items }: { items: StaffQueueItem[] }) => {
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
 
   return (
     <Card className="bg-bg-surface shadow-card border border-border">
@@ -33,18 +28,16 @@ export const StaffQueueCard = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        {queueItems.map((item) => (
+        {items.map((item) => (
           <div
-            key={item.key}
+            key={item.id}
             className="flex flex-wrap justify-between items-center gap-3 bg-bg-subtle/60 px-4 py-3 border border-border rounded-lg"
           >
             <div>
               <p className="font-medium text-text-primary text-sm">
-                {t(`dashboard.staff.queueItems.${item.key}.title`)}
+                {item.title[locale]}
               </p>
-              <p className="text-text-muted text-xs">
-                {t(`dashboard.staff.queueItems.${item.key}.meta`)}
-              </p>
+              <p className="text-text-muted text-xs">{item.meta[locale]}</p>
             </div>
             <div className="flex items-center gap-2">
               <span

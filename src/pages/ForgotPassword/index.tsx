@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { mock_login_db } from "@/modules/api/mock/login/db";
+import { mock_login_db } from "@/modules/api/mock/db/auth/login";
 
 export const ForgotPassword = () => {
   const { t } = useTranslation();

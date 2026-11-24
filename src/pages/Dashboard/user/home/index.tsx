@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accessibility,
   Bell,
@@ -14,26 +14,36 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserTracking } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type { UserTrackingData } from "@/modules/interface/api/dashboard";
 
 import { RequestTimeline } from "./RequestTimeline";
 
-type ActivityStatus = "inProgress" | "completed";
-
 export const UserHomeView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const [tracking, setTracking] = useState<UserTrackingData | null>(null);
   const [messageNotice, setMessageNotice] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
 
-  const activityItems: {
-    key: "item1" | "item2" | "item3";
-    status: ActivityStatus;
-  }[] = [
-    { key: "item1", status: "inProgress" },
-    { key: "item2", status: "completed" },
-    { key: "item3", status: "completed" },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+    void getUserTracking().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setTracking(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!tracking) {
+    return null;
+  }
 
   const handleSendMessage = () => {
     setMessageNotice(true);
@@ -71,7 +81,7 @@ export const UserHomeView = () => {
                   {t("dashboard.user.tracking.requestLabel")}
                 </span>
                 <span className="font-bold text-primary text-lg">
-                  {t("dashboard.user.tracking.requestCode")}
+                  {tracking.requestCode}
                 </span>
                 <span
                   className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${
@@ -85,7 +95,7 @@ export const UserHomeView = () => {
                     : t("dashboard.status.inProgress")}
                 </span>
                 <span className="text-text-muted text-xs">
-                  {t("dashboard.user.tracking.updatedAt")}
+                  {tracking.updatedAt[locale]}
                 </span>
               </div>
 
@@ -98,7 +108,7 @@ export const UserHomeView = () => {
                     <span className="font-semibold text-text-primary">
                       {t("dashboard.user.tracking.deviceLabel")}
                     </span>{" "}
-                    {t("dashboard.user.tracking.deviceValue")}
+                    {tracking.device[locale]}
                   </p>
                   <span aria-hidden="true" className="hidden sm:inline text-border">
                     |
@@ -107,7 +117,7 @@ export const UserHomeView = () => {
                     <span className="font-semibold text-text-primary">
                       {t("dashboard.user.tracking.issueLabel")}
                     </span>{" "}
-                    {t("dashboard.user.tracking.issueValue")}
+                    {tracking.issue[locale]}
                   </p>
                 </div>
               </div>
@@ -115,7 +125,7 @@ export const UserHomeView = () => {
           </Card>
 
           {/* Fixed responsive timeline stepper */}
-          <RequestTimeline />
+          <RequestTimeline steps={tracking.timelineSteps} />
 
           {/* Assigned helper card */}
           <Card className="bg-bg-surface shadow-card border border-border">
@@ -131,13 +141,13 @@ export const UserHomeView = () => {
                 </span>
                 <div className="space-y-0.5">
                   <p className="font-bold text-text-primary text-sm">
-                    {t("dashboard.user.tracking.helper.name")}
+                    {tracking.helper.name[locale]}
                   </p>
                   <p className="text-text-muted text-xs">
-                    {t("dashboard.user.tracking.helper.role")}
+                    {tracking.helper.role[locale]}
                   </p>
                   <p className="text-text-muted text-xs">
-                    {t("dashboard.user.tracking.helper.center")}
+                    {tracking.helper.center[locale]}
                   </p>
                 </div>
               </div>
@@ -191,10 +201,10 @@ export const UserHomeView = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
-              {activityItems.map((item, index) => {
-                const isLast = index === activityItems.length - 1;
+              {tracking.activityItems.map((item, index) => {
+                const isLast = index === tracking.activityItems.length - 1;
                 return (
-                  <div key={item.key} className="relative flex gap-3">
+                  <div key={item.id} className="relative flex gap-3">
                     {!isLast && (
                       <span
                         aria-hidden="true"
@@ -207,9 +217,7 @@ export const UserHomeView = () => {
                     <div className="flex-1 space-y-1 min-w-0">
                       <div className="flex flex-wrap justify-between items-center gap-1.5">
                         <span className="text-text-muted text-xs">
-                          {t(
-                            `dashboard.user.tracking.activity.items.${item.key}.time`,
-                          )}
+                          {item.time[locale]}
                         </span>
                         <span
                           className={`px-2 py-0.5 rounded-full font-medium text-[11px] ${
@@ -222,14 +230,10 @@ export const UserHomeView = () => {
                         </span>
                       </div>
                       <p className="font-bold text-text-primary text-sm">
-                        {t(
-                          `dashboard.user.tracking.activity.items.${item.key}.title`,
-                        )}
+                        {item.title[locale]}
                       </p>
                       <p className="text-text-body text-xs leading-relaxed">
-                        {t(
-                          `dashboard.user.tracking.activity.items.${item.key}.description`,
-                        )}
+                        {item.description[locale]}
                       </p>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 import type { KnowledgeArticle } from "@/modules/interface/api/knowledge";
 
 import { ApiResponse } from "../responseClass";
-import { mock_knowledge_db } from "./db";
+import { mock_knowledge_db } from "../db/dashboard/knowledge";
 
 export const getKnowledgeArticles = async (): Promise<
   ApiResponse<KnowledgeArticle[]>

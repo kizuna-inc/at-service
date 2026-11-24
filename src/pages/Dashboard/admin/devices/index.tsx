@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Laptop, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getAdminDevices } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type { AdminDeviceItem } from "@/modules/interface/api/dashboard";
 
 type DeviceStatus = "active" | "inProgress" | "pending";
 type FilterStatus = "all" | DeviceStatus;
@@ -15,17 +18,22 @@ const STATUS_BADGE_MAP: Record<DeviceStatus, string> = {
 };
 
 export const DevicesView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
   const [filter, setFilter] = useState<FilterStatus>("all");
+  const [items, setItems] = useState<AdminDeviceItem[]>([]);
 
-  const items: {
-    key: "item1" | "item2" | "item3";
-    status: DeviceStatus;
-  }[] = [
-    { key: "item1", status: "active" },
-    { key: "item2", status: "inProgress" },
-    { key: "item3", status: "pending" },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+    void getAdminDevices().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setItems(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const filters: { value: FilterStatus; label: string }[] = [
     { value: "all", label: t("dashboard.admin.pages.devices.filterAll") },
@@ -83,7 +91,7 @@ export const DevicesView = () => {
       <div className="space-y-3">
         {visibleItems.map((item) => (
           <Card
-            key={item.key}
+            key={item.id}
             className="bg-bg-surface shadow-card border border-border"
           >
             <CardContent className="flex flex-wrap justify-between items-center gap-3 py-1">
@@ -94,18 +102,14 @@ export const DevicesView = () => {
                 <div>
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-text-primary text-sm">
-                      {t(
-                        `dashboard.admin.pages.devices.items.${item.key}.name`,
-                      )}
+                      {item.name[locale]}
                     </p>
                     <span className="bg-bg-subtle px-2 py-0.5 rounded text-text-muted text-xs">
-                      {t(
-                        `dashboard.admin.pages.devices.items.${item.key}.category`,
-                      )}
+                      {item.category[locale]}
                     </span>
                   </div>
                   <p className="mt-0.5 text-text-muted text-xs">
-                    {t(`dashboard.admin.pages.devices.items.${item.key}.meta`)}
+                    {item.meta[locale]}
                   </p>
                 </div>
               </div>

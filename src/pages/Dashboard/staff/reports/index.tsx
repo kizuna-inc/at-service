@@ -1,33 +1,53 @@
+import { useEffect, useState } from "react";
 import { BarChart2, CheckCircle2, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getStaffReports } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type { StaffReportsData } from "@/modules/interface/api/dashboard";
 
 export const StaffReportsView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const [data, setData] = useState<StaffReportsData | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getStaffReports().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setData(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!data) {
+    return null;
+  }
 
   const stats = [
     {
       label: t("dashboard.staff.pages.reports.stats.completedCases"),
-      value: "28",
+      value: data.stats.completedCases,
       icon: CheckCircle2,
       iconBg: "bg-success-bg text-success-text",
     },
     {
       label: t("dashboard.staff.pages.reports.stats.avgTurnaround"),
-      value: "1.8h",
+      value: data.stats.avgTurnaround,
       icon: Clock,
       iconBg: "bg-info-bg text-info-text",
     },
     {
       label: t("dashboard.staff.pages.reports.stats.satisfaction"),
-      value: "4.9/5",
+      value: data.stats.satisfaction,
       icon: BarChart2,
       iconBg: "bg-primary-light text-primary",
     },
   ];
-
-  const logs: ("item1" | "item2" | "item3")[] = ["item1", "item2", "item3"];
 
   return (
     <div className="space-y-6">
@@ -73,21 +93,19 @@ export const StaffReportsView = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {logs.map((key) => (
+          {data.logs.map((log) => (
             <div
-              key={key}
+              key={log.id}
               className="flex flex-wrap justify-between items-center gap-2 bg-bg-subtle/60 px-3.5 py-2.5 border border-border rounded-lg"
             >
               <div>
                 <p className="font-medium text-text-primary text-sm">
-                  {t(`dashboard.staff.pages.reports.logs.${key}.title`)}
+                  {log.title[locale]}
                 </p>
-                <p className="text-text-muted text-xs">
-                  {t(`dashboard.staff.pages.reports.logs.${key}.date`)}
-                </p>
+                <p className="text-text-muted text-xs">{log.date[locale]}</p>
               </div>
               <span className="bg-success-bg px-2.5 py-0.5 rounded-full font-medium text-success-text text-xs">
-                {t(`dashboard.staff.pages.reports.logs.${key}.result`)}
+                {log.result[locale]}
               </span>
             </div>
           ))}

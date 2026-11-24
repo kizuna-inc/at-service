@@ -1,27 +1,37 @@
+import { useEffect, useState } from "react";
 import { Calendar, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { getStaffSchedule } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type {
+  StaffQueueStatus,
+  StaffScheduleItem,
+} from "@/modules/interface/api/dashboard";
 
-type ScheduleStatus = "inProgress" | "pending" | "completed";
-
-const STATUS_BADGE_MAP: Record<ScheduleStatus, string> = {
+const STATUS_BADGE_MAP: Record<StaffQueueStatus, string> = {
   inProgress: "bg-info-bg text-info-text",
   pending: "bg-warning-bg text-warning-text border border-warning-border",
   completed: "bg-success-bg text-success-text",
 };
 
 export const StaffScheduleView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const [appointments, setAppointments] = useState<StaffScheduleItem[]>([]);
 
-  const appointments: {
-    key: "item1" | "item2" | "item3";
-    status: ScheduleStatus;
-  }[] = [
-    { key: "item1", status: "inProgress" },
-    { key: "item2", status: "pending" },
-    { key: "item3", status: "completed" },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+    void getStaffSchedule().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setAppointments(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -37,7 +47,7 @@ export const StaffScheduleView = () => {
       <div className="space-y-3">
         {appointments.map((item) => (
           <Card
-            key={item.key}
+            key={item.id}
             className="bg-bg-surface shadow-card border border-border"
           >
             <CardContent className="flex flex-wrap justify-between items-center gap-3 py-1">
@@ -48,17 +58,15 @@ export const StaffScheduleView = () => {
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-semibold text-text-primary text-sm">
-                      {t(`dashboard.staff.pages.schedule.items.${item.key}.title`)}
+                      {item.title[locale]}
                     </p>
                     <span className="flex items-center gap-1 bg-bg-subtle px-2 py-0.5 rounded text-text-muted text-xs">
                       <Clock className="size-3" />
-                      <span>
-                        {t(`dashboard.staff.pages.schedule.items.${item.key}.time`)}
-                      </span>
+                      <span>{item.time[locale]}</span>
                     </span>
                   </div>
                   <p className="mt-0.5 text-text-muted text-xs">
-                    {t(`dashboard.staff.pages.schedule.items.${item.key}.meta`)}
+                    {item.meta[locale]}
                   </p>
                 </div>
               </div>

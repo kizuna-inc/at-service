@@ -190,22 +190,33 @@ export const en = {
           subtitle: "Track your submitted assistance requests and status updates.",
           newRequest: "New Request",
           filterAll: "All",
-          items: {
-            item1: {
-              title: "Screen Reader Configuration",
-              meta: "Submitted 2 hours ago · Assigned to ณัฐธิดา ศิริพรชัย",
-              category: "Software",
-            },
-            item2: {
-              title: "Home Desk Ergonomic Setup",
-              meta: "Scheduled for tomorrow 10:00",
-              category: "Assessment",
-            },
-            item3: {
-              title: "Braille Display Orientation",
-              meta: "Completed on 18 Nov 2026",
-              category: "Training",
-            },
+          createdNotice: "Your request has been submitted.",
+          categories: {
+            software: "Software",
+            assessment: "Assessment",
+            training: "Training",
+            repair: "Repair",
+          },
+          form: {
+            title: "Submit New Request",
+            subtitle:
+              "Describe what assistive support or device help you need.",
+            backToList: "Back to Help Requests",
+            subjectLabel: "Subject",
+            subjectPlaceholder: "e.g., Screen reader voice setup",
+            categoryLabel: "Category",
+            deviceLabel: "Related Device (Optional)",
+            devicePlaceholder: "e.g., NVDA, Focus 40, Power Wheelchair",
+            urgencyLabel: "Urgency",
+            urgencyNormal: "Normal",
+            urgencyUrgent: "Urgent",
+            preferredDateLabel: "Preferred Date (Optional)",
+            descriptionLabel: "Details",
+            descriptionPlaceholder:
+              "Share the issue or assistance needed so our staff can prepare.",
+            validationError: "Please fill in both subject and details.",
+            submit: "Submit Request",
+            cancel: "Cancel",
           },
         },
         repair: {

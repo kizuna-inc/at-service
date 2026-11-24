@@ -3,29 +3,28 @@ import { Check, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Locale } from "@/modules/i18n";
+import type { TrackingTimelineStep } from "@/modules/interface/api/dashboard";
 
-type StepKey = "received" | "reviewing" | "scheduled" | "completed";
-type StepState = "done" | "current" | "upcoming";
+export const RequestTimeline = ({
+  steps,
+}: {
+  steps: TrackingTimelineStep[];
+}) => {
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-interface TimelineStep {
-  key: StepKey;
-  number: number;
-  state: StepState;
-}
+  if (steps.length === 0) {
+    return null;
+  }
 
-const TIMELINE_STEPS: TimelineStep[] = [
-  { key: "received", number: 1, state: "done" },
-  { key: "reviewing", number: 2, state: "current" },
-  { key: "scheduled", number: 3, state: "upcoming" },
-  { key: "completed", number: 4, state: "upcoming" },
-];
-
-export const RequestTimeline = () => {
-  const { t } = useTranslation();
-  const [selectedStep, setSelectedStep] = useState<StepKey>("reviewing");
-
+  const activeStep =
+    steps.find((step) => step.id === selectedId) ??
+    steps.find((step) => step.state === "current") ??
+    steps[0];
   const currentStepNumber =
-    TIMELINE_STEPS.find((step) => step.state === "current")?.number ?? 1;
+    steps.find((step) => step.state === "current")?.number ?? 1;
 
   return (
     <Card className="bg-bg-surface shadow-card border border-border">
@@ -37,7 +36,7 @@ export const RequestTimeline = () => {
           <span className="bg-primary-light px-2.5 py-0.5 border border-primary-border rounded-full font-medium text-primary text-xs">
             {t("dashboard.user.tracking.timeline.stepProgress", {
               current: currentStepNumber,
-              total: TIMELINE_STEPS.length,
+              total: steps.length,
             })}
           </span>
         </div>
@@ -45,7 +44,7 @@ export const RequestTimeline = () => {
           <div
             className="bg-primary rounded-full h-full transition-all"
             style={{
-              width: `${(currentStepNumber / TIMELINE_STEPS.length) * 100}%`,
+              width: `${(currentStepNumber / steps.length) * 100}%`,
             }}
           />
         </div>
@@ -54,14 +53,14 @@ export const RequestTimeline = () => {
       <CardContent className="space-y-4">
         {/* Desktop horizontal stepper */}
         <ol className="hidden sm:grid sm:grid-cols-4 gap-2">
-          {TIMELINE_STEPS.map((step, index) => {
-            const isSelected = selectedStep === step.key;
+          {steps.map((step, index) => {
+            const isSelected = activeStep.id === step.id;
             const isLeftFilled = index > 0 && step.state !== "upcoming";
             const isRightFilled =
-              index < TIMELINE_STEPS.length - 1 && step.state === "done";
+              index < steps.length - 1 && step.state === "done";
 
             return (
-              <li key={step.key} className="flex flex-col items-center">
+              <li key={step.id} className="flex flex-col items-center">
                 <div className="relative flex justify-center items-center w-full">
                   {index > 0 && (
                     <span
@@ -71,7 +70,7 @@ export const RequestTimeline = () => {
                       }`}
                     />
                   )}
-                  {index < TIMELINE_STEPS.length - 1 && (
+                  {index < steps.length - 1 && (
                     <span
                       aria-hidden="true"
                       className={`top-1/2 right-0 left-1/2 absolute h-0.5 -translate-y-1/2 ${
@@ -81,7 +80,7 @@ export const RequestTimeline = () => {
                   )}
                   <button
                     type="button"
-                    onClick={() => setSelectedStep(step.key)}
+                    onClick={() => setSelectedId(step.id)}
                     aria-current={step.state === "current" ? "step" : undefined}
                     aria-pressed={isSelected}
                     className={`relative z-10 flex justify-center items-center rounded-full size-9 font-semibold text-xs transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
@@ -104,7 +103,7 @@ export const RequestTimeline = () => {
 
                 <button
                   type="button"
-                  onClick={() => setSelectedStep(step.key)}
+                  onClick={() => setSelectedId(step.id)}
                   className="mt-3 px-1 text-center cursor-pointer"
                 >
                   <p
@@ -114,10 +113,10 @@ export const RequestTimeline = () => {
                         : "font-semibold text-text-primary"
                     }`}
                   >
-                    {t(`dashboard.user.tracking.timeline.steps.${step.key}.title`)}
+                    {step.title[locale]}
                   </p>
                   <p className="mt-0.5 text-[11px] text-text-muted">
-                    {t(`dashboard.user.tracking.timeline.steps.${step.key}.time`)}
+                    {step.time[locale]}
                   </p>
                 </button>
               </li>
@@ -127,16 +126,16 @@ export const RequestTimeline = () => {
 
         {/* Mobile vertical stepper */}
         <ol className="flex flex-col sm:hidden">
-          {TIMELINE_STEPS.map((step, index) => {
-            const isSelected = selectedStep === step.key;
-            const isLast = index === TIMELINE_STEPS.length - 1;
+          {steps.map((step, index) => {
+            const isSelected = activeStep.id === step.id;
+            const isLast = index === steps.length - 1;
 
             return (
-              <li key={step.key} className="flex gap-3">
+              <li key={step.id} className="flex gap-3">
                 <div className="flex flex-col items-center">
                   <button
                     type="button"
-                    onClick={() => setSelectedStep(step.key)}
+                    onClick={() => setSelectedId(step.id)}
                     aria-current={step.state === "current" ? "step" : undefined}
                     aria-pressed={isSelected}
                     className={`flex justify-center items-center rounded-full size-8 font-semibold text-xs shrink-0 cursor-pointer ${
@@ -167,7 +166,7 @@ export const RequestTimeline = () => {
 
                 <button
                   type="button"
-                  onClick={() => setSelectedStep(step.key)}
+                  onClick={() => setSelectedId(step.id)}
                   className="pb-4 text-left cursor-pointer"
                 >
                   <p
@@ -177,10 +176,10 @@ export const RequestTimeline = () => {
                         : "font-semibold text-text-primary"
                     }`}
                   >
-                    {t(`dashboard.user.tracking.timeline.steps.${step.key}.title`)}
+                    {step.title[locale]}
                   </p>
                   <p className="text-text-muted text-xs">
-                    {t(`dashboard.user.tracking.timeline.steps.${step.key}.time`)}
+                    {step.time[locale]}
                   </p>
                 </button>
               </li>
@@ -190,10 +189,10 @@ export const RequestTimeline = () => {
 
         <div className="bg-primary-light/60 px-4 py-3 border border-primary-border/60 rounded-xl">
           <p className="font-semibold text-primary text-xs">
-            {t(`dashboard.user.tracking.timeline.steps.${selectedStep}.title`)}
+            {activeStep.title[locale]}
           </p>
           <p className="mt-0.5 text-text-body text-xs leading-relaxed">
-            {t(`dashboard.user.tracking.timeline.steps.${selectedStep}.detail`)}
+            {activeStep.detail[locale]}
           </p>
         </div>
       </CardContent>

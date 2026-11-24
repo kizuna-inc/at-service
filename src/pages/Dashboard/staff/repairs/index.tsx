@@ -1,31 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Wrench } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getStaffRepairs } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type {
+  StaffQueueStatus,
+  StaffRepairItem,
+} from "@/modules/interface/api/dashboard";
 
-type RepairStatus = "pending" | "inProgress" | "completed";
-type FilterStatus = "all" | RepairStatus;
+type FilterStatus = "all" | StaffQueueStatus;
 
-const STATUS_BADGE_MAP: Record<RepairStatus, string> = {
+const STATUS_BADGE_MAP: Record<StaffQueueStatus, string> = {
   pending: "bg-warning-bg text-warning-text border border-warning-border",
   inProgress: "bg-info-bg text-info-text",
   completed: "bg-success-bg text-success-text",
 };
 
 export const StaffRepairsView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
   const [filter, setFilter] = useState<FilterStatus>("all");
+  const [items, setItems] = useState<StaffRepairItem[]>([]);
 
-  const items: {
-    key: "item1" | "item2" | "item3";
-    status: RepairStatus;
-  }[] = [
-    { key: "item1", status: "pending" },
-    { key: "item2", status: "inProgress" },
-    { key: "item3", status: "completed" },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+    void getStaffRepairs().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setItems(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const filters: { value: FilterStatus; label: string }[] = [
     { value: "all", label: t("dashboard.staff.pages.repairs.filterAll") },
@@ -74,7 +84,7 @@ export const StaffRepairsView = () => {
       <div className="space-y-3">
         {visibleItems.map((item) => (
           <Card
-            key={item.key}
+            key={item.id}
             className="bg-bg-surface shadow-card border border-border"
           >
             <CardContent className="flex flex-wrap justify-between items-center gap-3 py-1">
@@ -85,14 +95,14 @@ export const StaffRepairsView = () => {
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-semibold text-text-primary text-sm">
-                      {t(`dashboard.staff.pages.repairs.items.${item.key}.title`)}
+                      {item.title[locale]}
                     </p>
                     <span className="bg-bg-subtle px-2 py-0.5 rounded text-text-muted text-xs">
-                      {t(`dashboard.staff.pages.repairs.items.${item.key}.device`)}
+                      {item.device[locale]}
                     </span>
                   </div>
                   <p className="mt-0.5 text-text-muted text-xs">
-                    {t(`dashboard.staff.pages.repairs.items.${item.key}.meta`)}
+                    {item.meta[locale]}
                   </p>
                 </div>
               </div>

@@ -1,9 +1,26 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import { getStaffQueue } from "@/modules/api/mock/dashboard";
+import type { StaffQueueItem } from "@/modules/interface/api/dashboard";
 
 import { StaffQueueCard } from "./StaffQueueCard";
 
 export const StaffQueueView = () => {
   const { t } = useTranslation();
+  const [items, setItems] = useState<StaffQueueItem[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getStaffQueue().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setItems(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -15,7 +32,7 @@ export const StaffQueueView = () => {
           {t("dashboard.staff.subtitle")}
         </p>
       </div>
-      <StaffQueueCard />
+      <StaffQueueCard items={items} />
     </div>
   );
 };

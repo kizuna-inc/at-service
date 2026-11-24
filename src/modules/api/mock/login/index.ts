@@ -3,7 +3,7 @@ import type {
   loginInterface,
 } from "@/modules/interface/api/auth/login";
 import { ApiResponse } from "../responseClass";
-import { mock_login_db } from "./db";
+import { mock_login_db } from "../db/auth/login";
 
 export const login = async (
   body: loginInterface,

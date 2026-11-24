@@ -111,7 +111,7 @@ export const Navbar = () => {
               type="button"
               size="sm"
               onClick={() => navigate("/login")}
-              className="flex justify-center items-center bg-primary hover:bg-primary-hover w-22 text-text-inverse cursor-pointer"
+              className="flex justify-center items-center bg-primary hover:bg-primary-hover min-w-22 text-text-inverse cursor-pointer"
             >
               <LogIn className="size-4" />
               <span>{t("nav.login")}</span>

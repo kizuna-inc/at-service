@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import { Laptop, Plus, Wrench } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserRepairData } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type { UserRepairData } from "@/modules/interface/api/dashboard";
 
 type TicketStatus = "inProgress" | "completed";
 
@@ -12,16 +16,25 @@ const STATUS_BADGE_MAP: Record<TicketStatus, string> = {
 };
 
 export const RepairServicesView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const [data, setData] = useState<UserRepairData | null>(null);
 
-  const devices: ("item1" | "item2")[] = ["item1", "item2"];
-  const tickets: {
-    key: "item1" | "item2";
-    status: TicketStatus;
-  }[] = [
-    { key: "item1", status: "inProgress" },
-    { key: "item2", status: "completed" },
-  ];
+  useEffect(() => {
+    let cancelled = false;
+    void getUserRepairData().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setData(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div className="space-y-6">
@@ -50,9 +63,9 @@ export const RepairServicesView = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="gap-3 grid grid-cols-1 sm:grid-cols-2">
-          {devices.map((key) => (
+          {data.devices.map((device) => (
             <div
-              key={key}
+              key={device.id}
               className="flex items-start gap-3 bg-bg-subtle/60 p-3.5 border border-border rounded-lg"
             >
               <span className="flex justify-center items-center bg-primary-light rounded-lg size-9 text-primary shrink-0">
@@ -60,10 +73,10 @@ export const RepairServicesView = () => {
               </span>
               <div>
                 <p className="font-medium text-text-primary text-sm">
-                  {t(`dashboard.user.pages.repair.devices.${key}.name`)}
+                  {device.name[locale]}
                 </p>
                 <p className="mt-0.5 text-text-muted text-xs">
-                  {t(`dashboard.user.pages.repair.devices.${key}.meta`)}
+                  {device.meta[locale]}
                 </p>
               </div>
             </div>
@@ -78,9 +91,9 @@ export const RepairServicesView = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {tickets.map((ticket) => (
+          {data.tickets.map((ticket) => (
             <div
-              key={ticket.key}
+              key={ticket.id}
               className="flex flex-wrap justify-between items-center gap-3 bg-bg-subtle/60 px-3.5 py-3 border border-border rounded-lg"
             >
               <div className="flex items-center gap-3">
@@ -89,14 +102,10 @@ export const RepairServicesView = () => {
                 </span>
                 <div>
                   <p className="font-medium text-text-primary text-sm">
-                    {t(
-                      `dashboard.user.pages.repair.tickets.${ticket.key}.title`,
-                    )}
+                    {ticket.title[locale]}
                   </p>
                   <p className="text-text-muted text-xs">
-                    {t(
-                      `dashboard.user.pages.repair.tickets.${ticket.key}.meta`,
-                    )}
+                    {ticket.meta[locale]}
                   </p>
                 </div>
               </div>

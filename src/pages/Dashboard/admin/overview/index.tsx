@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Activity,
   BarChart3,
@@ -11,38 +12,60 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getAdminOverview } from "@/modules/api/mock/dashboard";
+import type { Locale } from "@/modules/i18n";
+import type {
+  AdminOverviewData,
+  AdminOverviewStatus,
+} from "@/modules/interface/api/dashboard";
 
 import { useDashboardUser } from "../..";
 
-type OverviewStatus = "active" | "pending" | "completed";
-
-const STATUS_BADGE_MAP: Record<OverviewStatus, string> = {
+const STATUS_BADGE_MAP: Record<AdminOverviewStatus, string> = {
   active: "bg-success-bg text-success-text",
   pending: "bg-warning-bg text-warning-text border border-warning-border",
   completed: "bg-success-bg text-success-text",
 };
 
 export const AdminOverviewView = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const user = useDashboardUser();
   const navigate = useNavigate();
+  const locale: Locale = i18n.language === "en" ? "en" : "th";
+  const [data, setData] = useState<AdminOverviewData | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getAdminOverview().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setData(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!data) {
+    return null;
+  }
 
   const stats = [
     {
       label: t("dashboard.admin.stats.totalUsers"),
-      value: "128",
+      value: data.stats.totalUsers,
       icon: Users,
       iconBg: "bg-primary-light text-primary",
     },
     {
       label: t("dashboard.admin.stats.activeStaff"),
-      value: "14",
+      value: data.stats.activeStaff,
       icon: UserCog,
       iconBg: "bg-info-bg text-info-text",
     },
     {
       label: t("dashboard.admin.stats.openRequests"),
-      value: "19",
+      value: data.stats.openRequests,
       icon: ClipboardList,
       iconBg: "bg-warning-bg text-warning-text",
     },
@@ -52,15 +75,6 @@ export const AdminOverviewView = () => {
       icon: Activity,
       iconBg: "bg-success-bg text-success-text",
     },
-  ];
-
-  const overviewItems: {
-    key: "item1" | "item2" | "item3";
-    status: OverviewStatus;
-  }[] = [
-    { key: "item1", status: "active" },
-    { key: "item2", status: "pending" },
-    { key: "item3", status: "completed" },
   ];
 
   return (
@@ -150,17 +164,17 @@ export const AdminOverviewView = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {overviewItems.map((item) => (
+            {data.overviewItems.map((item) => (
               <div
-                key={item.key}
+                key={item.id}
                 className="flex flex-wrap justify-between items-center gap-2 bg-bg-subtle/60 px-3.5 py-2.5 border border-border rounded-lg"
               >
                 <div>
                   <p className="font-medium text-text-primary text-sm">
-                    {t(`dashboard.admin.overviewItems.${item.key}.title`)}
+                    {item.title[locale]}
                   </p>
                   <p className="text-text-muted text-xs">
-                    {t(`dashboard.admin.overviewItems.${item.key}.meta`)}
+                    {item.meta[locale]}
                   </p>
                 </div>
                 <span

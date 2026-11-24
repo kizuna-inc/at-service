@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import { CheckCircle2, Clock, Wrench } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { getStaffOverview } from "@/modules/api/mock/dashboard";
+import type { StaffOverviewData } from "@/modules/interface/api/dashboard";
 
 import { useDashboardUser } from "../..";
 import { StaffQueueCard } from "../queue/StaffQueueCard";
@@ -9,23 +12,40 @@ import { StaffQueueCard } from "../queue/StaffQueueCard";
 export const StaffOverviewView = () => {
   const { t } = useTranslation();
   const user = useDashboardUser();
+  const [data, setData] = useState<StaffOverviewData | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getStaffOverview().then((res) => {
+      if (!cancelled && res.success && res.data) {
+        setData(res.data);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!data) {
+    return null;
+  }
 
   const stats = [
     {
       label: t("dashboard.staff.stats.pendingQueue"),
-      value: "4",
+      value: data.stats.pendingQueue,
       icon: Clock,
       iconBg: "bg-warning-bg text-warning-text",
     },
     {
       label: t("dashboard.staff.stats.inProgress"),
-      value: "6",
+      value: data.stats.inProgress,
       icon: Wrench,
       iconBg: "bg-info-bg text-info-text",
     },
     {
       label: t("dashboard.staff.stats.completedToday"),
-      value: "9",
+      value: data.stats.completedToday,
       icon: CheckCircle2,
       iconBg: "bg-success-bg text-success-text",
     },
@@ -73,7 +93,7 @@ export const StaffOverviewView = () => {
         })}
       </div>
 
-      <StaffQueueCard />
+      <StaffQueueCard items={data.queue} />
     </div>
   );
 };

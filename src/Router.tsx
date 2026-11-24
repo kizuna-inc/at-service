@@ -20,6 +20,7 @@ import { StaffReportsView } from "./pages/Dashboard/staff/reports";
 import { StaffScheduleView } from "./pages/Dashboard/staff/schedule";
 import { UserDashboard } from "./pages/Dashboard/UserDashboard";
 import { HelpRequestsView } from "./pages/Dashboard/user/requests";
+import { NewRequestView } from "./pages/Dashboard/user/requests/NewRequestView";
 import { HelpersView } from "./pages/Dashboard/user/helpers";
 import { KnowledgeArticleView } from "./pages/Dashboard/user/knowledge/ArticleView";
 import { KnowledgeView } from "./pages/Dashboard/user/knowledge";
@@ -45,6 +46,7 @@ export const Router = () => {
             <Route path="user" element={<UserDashboard />}>
               <Route index element={<UserHomeView />} />
               <Route path="requests" element={<HelpRequestsView />} />
+              <Route path="requests/new" element={<NewRequestView />} />
               <Route path="repair" element={<RepairServicesView />} />
               <Route path="helpers" element={<HelpersView />} />
               <Route path="knowledge" element={<KnowledgeView />} />
