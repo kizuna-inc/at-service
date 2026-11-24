@@ -4,12 +4,24 @@ import type {
 } from "@/modules/interface/api/requests";
 
 import { ApiResponse } from "../responseClass";
-import { mock_requests_db } from "@/modules/api/mock/db/dashboard/requests";
+import { mock_requests_db } from "./db";
 
 export const getHelpRequests = async (): Promise<
   ApiResponse<HelpRequest[]>
 > => {
   return ApiResponse.ok([...mock_requests_db], "Requests fetched", 200);
+};
+
+export const getHelpRequestById = async (
+  id: string,
+): Promise<ApiResponse<HelpRequest>> => {
+  const found = mock_requests_db.find((item) => item.id === id);
+
+  if (!found) {
+    return ApiResponse.error<HelpRequest>("Request not found", 404);
+  }
+
+  return ApiResponse.ok(found, "Request fetched", 200);
 };
 
 export const createHelpRequest = async (
@@ -43,7 +55,7 @@ export const createHelpRequest = async (
     status: "pending",
     urgency: input.urgency,
     device,
-    description,
+    description: { en: description, th: description },
     preferredDate,
   };
 

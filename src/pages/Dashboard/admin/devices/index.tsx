@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getAdminDevices } from "@/modules/api/mock/dashboard";
+import { showDemoAlert } from "@/modules/demoAlert";
 import type { Locale } from "@/modules/i18n";
 import type { AdminDeviceItem } from "@/modules/interface/api/dashboard";
 
@@ -58,6 +59,7 @@ export const DevicesView = () => {
         </div>
         <Button
           type="button"
+          onClick={showDemoAlert}
           className="bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
         >
           <Plus className="size-4" />

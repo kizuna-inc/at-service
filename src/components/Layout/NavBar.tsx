@@ -4,6 +4,7 @@ import { Globe, LogIn, LogOut, Search, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
+import { showDemoAlert } from "@/modules/demoAlert";
 import type { loginDetailInterface } from "@/modules/interface/api/auth/login";
 
 import { AccessibilityMenu } from "./AccessibilityMenu";
@@ -89,6 +90,7 @@ export const Navbar = () => {
             type="button"
             variant="ghost"
             size="icon"
+            onClick={showDemoAlert}
             aria-label={t("nav.search")}
             className="hover:bg-brand-navy-hover text-text-inverse hover:text-text-inverse cursor-pointer"
           >

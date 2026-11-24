@@ -12,7 +12,7 @@ export interface HelpRequest {
   status: RequestStatus;
   urgency: RequestUrgency;
   device?: string;
-  description?: string;
+  description?: Record<Locale, string>;
   preferredDate?: string;
 }
 

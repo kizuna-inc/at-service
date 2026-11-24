@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { showDemoAlert } from "@/modules/demoAlert";
 
 import loginMockup from "@/assets/login-mockup.svg";
 import { login } from "@/modules/api/mock/login";
@@ -205,7 +206,7 @@ export const Login = () => {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => navigate("/register")}
+                    onClick={showDemoAlert}
                     className="hover:bg-primary-light py-4 border-border-input w-full h-auto text-text-primary cursor-pointer"
                   >
                     <UserPlus className="size-4" />

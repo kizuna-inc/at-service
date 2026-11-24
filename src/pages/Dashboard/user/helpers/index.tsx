@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { getUserHelpers } from "@/modules/api/mock/dashboard";
+import { showDemoAlert } from "@/modules/demoAlert";
 import type { Locale } from "@/modules/i18n";
 import type { HelperProfile } from "@/modules/interface/api/dashboard";
 
@@ -77,6 +78,7 @@ export const HelpersView = () => {
                 type="button"
                 size="sm"
                 disabled={!helper.available}
+                onClick={showDemoAlert}
                 className="bg-primary hover:bg-primary-hover w-full text-text-inverse cursor-pointer"
               >
                 <Calendar className="size-4" />

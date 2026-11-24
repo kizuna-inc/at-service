@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { CheckCircle2, FileText, Plus } from "lucide-react";
+import { CheckCircle2, ChevronRight, FileText, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -112,38 +112,44 @@ export const HelpRequestsView = () => {
 
       <div className="space-y-3">
         {visibleItems.map((item) => (
-          <Card
+          <Link
             key={item.id}
-            className="bg-bg-surface shadow-card border border-border"
+            to={`/dashboard/user/requests/${item.id}`}
+            className="block group"
           >
-            <CardContent className="flex flex-wrap justify-between items-center gap-3 py-1">
-              <div className="flex items-start gap-3">
-                <span className="flex justify-center items-center bg-primary-light mt-0.5 rounded-lg size-9 text-primary shrink-0">
-                  <FileText className="size-4" />
-                </span>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <p className="font-semibold text-text-primary text-sm">
-                      {item.title[locale]}
+            <Card className="bg-bg-surface shadow-card border border-border group-hover:border-primary/50 transition-colors">
+              <CardContent className="flex flex-wrap justify-between items-center gap-3 py-1">
+                <div className="flex items-start gap-3">
+                  <span className="flex justify-center items-center bg-primary-light mt-0.5 rounded-lg size-9 text-primary shrink-0">
+                    <FileText className="size-4" />
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-semibold text-text-primary text-sm">
+                        {item.title[locale]}
+                      </p>
+                      <span className="bg-bg-subtle px-2 py-0.5 rounded text-text-muted text-xs">
+                        {t(
+                          `dashboard.user.pages.requests.categories.${item.category}`,
+                        )}
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-text-muted text-xs">
+                      {item.meta[locale]}
                     </p>
-                    <span className="bg-bg-subtle px-2 py-0.5 rounded text-text-muted text-xs">
-                      {t(
-                        `dashboard.user.pages.requests.categories.${item.category}`,
-                      )}
-                    </span>
                   </div>
-                  <p className="mt-0.5 text-text-muted text-xs">
-                    {item.meta[locale]}
-                  </p>
                 </div>
-              </div>
-              <span
-                className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
-              >
-                {t(`dashboard.status.${item.status}`)}
-              </span>
-            </CardContent>
-          </Card>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
+                  >
+                    {t(`dashboard.status.${item.status}`)}
+                  </span>
+                  <ChevronRight className="size-4 text-text-muted group-hover:text-primary transition-colors" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

@@ -5,6 +5,7 @@ import { UserDashboard } from "@/pages/Dashboard/UserDashboard";
 import { UserHomeView } from "@/pages/Dashboard/user/home";
 import { HelpRequestsView } from "@/pages/Dashboard/user/requests";
 import { NewRequestView } from "@/pages/Dashboard/user/requests/NewRequestView";
+import { RequestDetailView } from "@/pages/Dashboard/user/requests/RequestDetailView";
 import { HelpersView } from "@/pages/Dashboard/user/helpers";
 import { KnowledgeArticleView } from "@/pages/Dashboard/user/knowledge/ArticleView";
 import { KnowledgeView } from "@/pages/Dashboard/user/knowledge";
@@ -20,6 +21,7 @@ export const userDashboardRoutes: RouteObject[] = [
       { index: true, element: <UserHomeView /> },
       { path: "requests", element: <HelpRequestsView /> },
       { path: "requests/new", element: <NewRequestView /> },
+      { path: "requests/:requestId", element: <RequestDetailView /> },
       { path: "repair", element: <RepairServicesView /> },
       { path: "helpers", element: <HelpersView /> },
       { path: "knowledge", element: <KnowledgeView /> },

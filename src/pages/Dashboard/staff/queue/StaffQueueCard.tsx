@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { showDemoAlert } from "@/modules/demoAlert";
 import type { Locale } from "@/modules/i18n";
 import type {
   StaffQueueItem,
@@ -49,6 +50,7 @@ export const StaffQueueCard = ({ items }: { items: StaffQueueItem[] }) => {
                 type="button"
                 size="xs"
                 variant={item.status === "pending" ? "default" : "outline"}
+                onClick={showDemoAlert}
                 className={
                   item.status === "pending"
                     ? "bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"

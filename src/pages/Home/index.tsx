@@ -8,7 +8,5 @@ const checkLoginStatus = (): boolean => {
 };
 
 export const HomePage = () => {
-  return (
-    <Navigate to={checkLoginStatus() ? "/dashboard" : "/login"} replace />
-  );
+  return <Navigate to={checkLoginStatus() ? "/dashboard" : "/login"} replace />;
 };

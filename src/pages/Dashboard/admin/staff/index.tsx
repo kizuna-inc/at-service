@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { getAdminStaff } from "@/modules/api/mock/dashboard";
+import { showDemoAlert } from "@/modules/demoAlert";
 import type { Locale } from "@/modules/i18n";
 import type { AdminStaffItem } from "@/modules/interface/api/dashboard";
 
@@ -77,6 +78,7 @@ export const StaffView = () => {
                 type="button"
                 size="sm"
                 disabled={!staff.available}
+                onClick={showDemoAlert}
                 className="bg-primary hover:bg-primary-hover w-full text-text-inverse cursor-pointer"
               >
                 <ClipboardCheck className="size-4" />

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getUserRepairData } from "@/modules/api/mock/dashboard";
+import { showDemoAlert } from "@/modules/demoAlert";
 import type { Locale } from "@/modules/i18n";
 import type { UserRepairData } from "@/modules/interface/api/dashboard";
 
@@ -49,6 +50,7 @@ export const RepairServicesView = () => {
         </div>
         <Button
           type="button"
+          onClick={showDemoAlert}
           className="bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
         >
           <Plus className="size-4" />
