@@ -38,16 +38,16 @@ export const StaffQueueCard = ({ items }: { items: StaffQueueItem[] }) => {
           >
             <div>
               <p className="font-medium text-text-primary text-sm">
-                {item.title[locale]}
+                {item.title[locale]}{" "}
+                <span
+                  className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
+                >
+                  {t(`dashboard.status.${item.status}`)}
+                </span>
               </p>
               <p className="text-text-muted text-xs">{item.meta[locale]}</p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <span
-                className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
-              >
-                {t(`dashboard.status.${item.status}`)}
-              </span>
               {item.status === "pending" && (
                 <Button
                   type="button"
@@ -63,7 +63,7 @@ export const StaffQueueCard = ({ items }: { items: StaffQueueItem[] }) => {
                 size="xs"
                 variant="outline"
                 onClick={() => navigate(`/dashboard/staff/queue/${item.id}`)}
-                className="border-border-input hover:bg-primary-light text-text-primary cursor-pointer"
+                className="hover:bg-primary-light border-border-input text-text-primary cursor-pointer"
               >
                 {t("dashboard.staff.actionView")}
               </Button>

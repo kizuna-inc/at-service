@@ -26,6 +26,7 @@ export const adminDashboardRoutes: RouteObject[] = [
       { path: "knowledge/new", element: <NewArticleView /> },
       { path: "knowledge/:articleId", element: <KnowledgeArticleView /> },
       { path: "reports", element: <AdminReportsView /> },
+      { path: "profile", element: <ProfileView /> },
       { path: "settings", element: <SettingsView /> },
       { path: ":userId", element: <ProfileView /> },
     ],

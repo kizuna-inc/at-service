@@ -4,6 +4,7 @@ import {
   Laptop,
   LayoutDashboard,
   Settings,
+  User,
   UserCog,
   Users,
 } from "lucide-react";
@@ -52,6 +53,11 @@ export const AdminDashboard = () => {
       to: "/dashboard/admin/reports",
       label: t("dashboard.admin.menu.reports"),
       icon: BarChart3,
+    },
+    {
+      to: "/dashboard/admin/profile",
+      label: t("dashboard.admin.menu.profile"),
+      icon: User,
     },
     {
       to: "/dashboard/admin/settings",

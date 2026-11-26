@@ -22,9 +22,9 @@ export interface UserProfile {
   address: LocalizedText;
   department: LocalizedText;
   bio: LocalizedText;
-  emergencyContact: ProfileEmergencyContact;
-  assistiveNeeds: LocalizedText[];
-  assignedDevices: ProfileAssignedDevice[];
+  emergencyContact?: ProfileEmergencyContact;
+  assistiveNeeds?: LocalizedText[];
+  assignedDevices?: ProfileAssignedDevice[];
 }
 
 export interface GetProfileQuery {

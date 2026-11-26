@@ -60,7 +60,7 @@
   --color-brand-navy-hover: #163a5c;
   --color-brand-accent: #14b8a6;
 
-  --color-primary-hover: #0a6f78;
+  --color-primary-hover: #085f66;
   --color-primary-light: #ebf7f9;
   --color-primary-border: #7dd3dc;
 
@@ -74,7 +74,7 @@
 
   --color-text-primary: #0f2942;
   --color-text-body: #334155;
-  --color-text-muted: #64748b;
+  --color-text-muted: #475569;
   --color-text-inverse: #ffffff;
 
   --color-success-bg: #e6f6ec;
@@ -93,7 +93,7 @@
   --color-notice-text: #92400e;
   --color-notice-icon: #d97706;
 
-  --color-danger-text: #ea580c;
+  --color-danger-text: #c2410c;
   --color-danger-border: #fdba74;
   --color-danger-bg-hover: #fff7ed;
 
@@ -113,8 +113,8 @@
   --color-brand-navy-hover: #163a5c;    /* Navbar dropdown/hover states */
   --color-brand-accent: #14b8a6;        /* "AT" logo highlight & active nav underline */
 
-  --color-primary: #0d8a94;             /* Primary CTA buttons, active step circles */
-  --color-primary-hover: #0a6f78;       /* Primary CTA hover state */
+  --color-primary: #0b7a83;             /* Primary CTA buttons, active step circles */
+  --color-primary-hover: #085f66;       /* Primary CTA hover state */
   --color-primary-light: #ebf7f9;       /* Active sidebar item & selected card tint */
   --color-primary-border: #7dd3dc;      /* Selected card border */
 
@@ -132,7 +132,7 @@
 
   --color-text-primary: #0f2942;        /* Headings & primary titles */
   --color-text-body: #334155;           /* Standard body copy & form values */
-  --color-text-muted: #64748b;          /* Subtitles, timestamps, metadata */
+  --color-text-muted: #475569;          /* Subtitles, timestamps, metadata */
   --color-text-inverse: #ffffff;        /* Text on navy/teal backgrounds */
 
   /* ==========================================================================
@@ -159,7 +159,7 @@
   --color-notice-icon: #d97706;
 
   /* Danger / Cancel Action (ยกเลิกนัดหมาย) */
-  --color-danger-text: #ea580c;
+  --color-danger-text: #c2410c;
   --color-danger-border: #fdba74;
   --color-danger-bg-hover: #fff7ed;
 
@@ -276,5 +276,29 @@
   }
   html {
     @apply font-sans;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  [data-contrast="high"] :focus-visible {
+    outline: 3px solid #ffbf00;
+    outline-offset: 2px;
+  }
+  :focus,
+  :target,
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

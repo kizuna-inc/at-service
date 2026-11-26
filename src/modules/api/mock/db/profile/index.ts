@@ -188,19 +188,6 @@ export const mock_profiles_db: UserProfile[] = [
       en: "Handles screen reader setups, home ergonomic visits, and assistive device diagnostics.",
       th: "ดูแลการติดตั้งโปรแกรมอ่านหน้าจอ การลงพื้นที่ประเมิน และการตรวจเช็กอุปกรณ์สิ่งอำนวยความสะดวก",
     },
-    emergencyContact: {
-      name: {
-        en: "AT Care Operations Desk",
-        th: "ศูนย์ปฏิบัติการ AT Care",
-      },
-      relation: {
-        en: "Internal Support",
-        th: "หน่วยงานสนับสนุนภายใน",
-      },
-      phone: "02-123-4500",
-    },
-    assistiveNeeds: [],
-    assignedDevices: [],
   },
   {
     id: "f2b2c3d4-6666-4666-8666-000000000005",
@@ -225,18 +212,5 @@ export const mock_profiles_db: UserProfile[] = [
       en: "Oversees user onboarding, staff workload allocation, and WCAG 2.2 AA compliance audits.",
       th: "กำกับดูแลการลงทะเบียนผู้ใช้งาน การจัดสรรภาระงานเจ้าหน้าที่ และมาตรฐาน WCAG 2.2 AA",
     },
-    emergencyContact: {
-      name: {
-        en: "AT Care Operations Desk",
-        th: "ศูนย์ปฏิบัติการ AT Care",
-      },
-      relation: {
-        en: "Internal Support",
-        th: "หน่วยงานสนับสนุนภายใน",
-      },
-      phone: "02-123-4500",
-    },
-    assistiveNeeds: [],
-    assignedDevices: [],
   },
 ];

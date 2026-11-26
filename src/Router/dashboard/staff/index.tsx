@@ -28,6 +28,7 @@ export const staffDashboardRoutes: RouteObject[] = [
       { path: "knowledge/new", element: <NewArticleView /> },
       { path: "knowledge/:articleId", element: <KnowledgeArticleView /> },
       { path: "reports", element: <StaffReportsView /> },
+      { path: "profile", element: <ProfileView /> },
       { path: "settings", element: <SettingsView /> },
       { path: ":userId", element: <ProfileView /> },
     ],

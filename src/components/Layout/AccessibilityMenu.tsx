@@ -151,117 +151,120 @@ export const AccessibilityMenu = () => {
   };
 
   return (
-    <Popover>
-      <PopoverTrigger
-        render={
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            aria-label={t("a11y.title")}
-            className="hover:bg-brand-navy-hover text-text-inverse hover:text-text-inverse cursor-pointer"
-          />
-        }
-      >
-        <Accessibility className="size-4" />
-      </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        className="space-y-3 bg-bg-surface p-4 border border-border w-72 text-text-body"
-      >
-        <PopoverHeader className="flex-row justify-between items-center">
-          <PopoverTitle className="font-semibold text-text-primary">
-            {t("a11y.title")}
-          </PopoverTitle>
-          <Button
-            type="button"
-            variant="ghost"
-            size="xs"
-            onClick={handleReset}
-            className="text-text-muted hover:text-text-primary cursor-pointer"
-          >
-            <RotateCcw className="size-3" />
-            <span>{t("a11y.reset")}</span>
-          </Button>
-        </PopoverHeader>
+    <>
+      <Popover>
+        <PopoverTrigger
+          render={
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label={t("a11y.title")}
+              className="hover:bg-brand-navy-hover text-text-inverse hover:text-text-inverse cursor-pointer"
+            />
+          }
+        >
+          <Accessibility className="size-4" aria-hidden="true" />
+        </PopoverTrigger>
+        <PopoverContent
+          align="end"
+          className="space-y-3 bg-bg-surface p-4 border border-border w-72 text-text-body"
+        >
+          <PopoverHeader className="flex-row justify-between items-center">
+            <PopoverTitle className="font-semibold text-text-primary">
+              {t("a11y.title")}
+            </PopoverTitle>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              onClick={handleReset}
+              className="text-text-muted hover:text-text-primary cursor-pointer"
+            >
+              <RotateCcw className="size-3" aria-hidden="true" />
+              <span>{t("a11y.reset")}</span>
+            </Button>
+          </PopoverHeader>
 
-        <div className="space-y-2 pt-2 border-t border-border">
-          <div className="flex items-center gap-2">
-            <span className="flex justify-center items-center bg-a11y-textsize rounded-full size-6 text-text-inverse">
-              <Type className="size-3.5" />
-            </span>
-            <span className="font-medium text-text-primary text-xs">
-              {t("a11y.textSize")}
-            </span>
+          <div className="space-y-2 pt-2 border-t border-border">
+            <div className="flex items-center gap-2">
+              <span className="flex justify-center items-center bg-a11y-textsize rounded-full size-6 text-text-inverse">
+                <Type className="size-3.5" aria-hidden="true" />
+              </span>
+              <span className="font-medium text-text-primary text-xs">
+                {t("a11y.textSize")}
+              </span>
+            </div>
+            <div className="gap-1.5 grid grid-cols-3">
+              {textSizeOptions.map((option) => {
+                const active = prefs.textSize === option.value;
+                return (
+                  <Button
+                    key={option.value}
+                    type="button"
+                    variant={active ? "default" : "outline"}
+                    size="xs"
+                    aria-pressed={active}
+                    onClick={() =>
+                      handleTextSizeChange(option.value, option.label)
+                    }
+                    className={
+                      active
+                        ? "bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
+                        : "border-border-input hover:bg-primary-light text-text-primary cursor-pointer"
+                    }
+                  >
+                    {option.label}
+                  </Button>
+                );
+              })}
+            </div>
           </div>
-          <div className="gap-1.5 grid grid-cols-3">
-            {textSizeOptions.map((option) => {
-              const active = prefs.textSize === option.value;
+
+          <div className="space-y-1.5 pt-2 border-t border-border">
+            {toggleOptions.map((item) => {
+              const Icon = item.icon;
+              const active = prefs[item.key];
               return (
-                <Button
-                  key={option.value}
+                <button
+                  key={item.key}
                   type="button"
-                  variant={active ? "default" : "outline"}
-                  size="xs"
                   aria-pressed={active}
-                  onClick={() => handleTextSizeChange(option.value, option.label)}
-                  className={
+                  onClick={() => handleToggle(item.key, item.label)}
+                  className={`flex justify-between items-center px-2.5 py-2 border rounded-lg w-full text-left transition-colors cursor-pointer ${
                     active
-                      ? "bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
-                      : "border-border-input hover:bg-primary-light text-text-primary cursor-pointer"
-                  }
+                      ? "bg-primary-light border-primary-border"
+                      : "bg-bg-surface hover:bg-bg-subtle border-border"
+                  }`}
                 >
-                  {option.label}
-                </Button>
+                  <span className="flex items-center gap-2.5">
+                    <span
+                      className={`flex justify-center items-center rounded-full size-6 text-text-inverse ${item.badgeClass}`}
+                    >
+                      <Icon className="size-3.5" aria-hidden="true" />
+                    </span>
+                    <span className="font-medium text-text-primary text-xs">
+                      {item.label}
+                    </span>
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 rounded font-medium text-[11px] ${
+                      active
+                        ? "bg-primary text-text-inverse"
+                        : "bg-bg-subtle text-text-muted"
+                    }`}
+                  >
+                    {active ? t("a11y.on") : t("a11y.off")}
+                  </span>
+                </button>
               );
             })}
           </div>
-        </div>
-
-        <div className="space-y-1.5 pt-2 border-t border-border">
-          {toggleOptions.map((item) => {
-            const Icon = item.icon;
-            const active = prefs[item.key];
-            return (
-              <button
-                key={item.key}
-                type="button"
-                aria-pressed={active}
-                onClick={() => handleToggle(item.key, item.label)}
-                className={`flex justify-between items-center px-2.5 py-2 border rounded-lg w-full text-left transition-colors cursor-pointer ${
-                  active
-                    ? "bg-primary-light border-primary-border"
-                    : "bg-bg-surface hover:bg-bg-subtle border-border"
-                }`}
-              >
-                <span className="flex items-center gap-2.5">
-                  <span
-                    className={`flex justify-center items-center rounded-full size-6 text-text-inverse ${item.badgeClass}`}
-                  >
-                    <Icon className="size-3.5" />
-                  </span>
-                  <span className="font-medium text-text-primary text-xs">
-                    {item.label}
-                  </span>
-                </span>
-                <span
-                  className={`px-2 py-0.5 rounded font-medium text-[11px] ${
-                    active
-                      ? "bg-primary text-text-inverse"
-                      : "bg-bg-subtle text-text-muted"
-                  }`}
-                >
-                  {active ? t("a11y.on") : t("a11y.off")}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        <span role="status" aria-live="polite" className="sr-only">
-          {announcement}
-        </span>
-      </PopoverContent>
-    </Popover>
+        </PopoverContent>
+      </Popover>
+      <span role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </span>
+    </>
   );
 };

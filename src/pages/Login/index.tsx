@@ -92,7 +92,10 @@ export const Login = () => {
           </div>
           <div className="space-y-4 mx-auto w-full md:max-w-none max-w-md">
             <Alert className="bg-notice-bg border-warning-border text-notice-text">
-              <TriangleAlert className="size-4 text-notice-icon" />
+              <TriangleAlert
+                className="size-4 text-notice-icon"
+                aria-hidden="true"
+              />
               <AlertTitle className="font-semibold text-notice-text">
                 {t("login.mockAlertTitle")}
               </AlertTitle>
@@ -103,7 +106,7 @@ export const Login = () => {
             <Card className="bg-bg-surface shadow-card border border-border w-full">
               <CardHeader>
                 <CardTitle className="font-bold text-text-primary text-xl">
-                  {t("login.title")}
+                  <h1>{t("login.title")}</h1>
                 </CardTitle>
                 <CardDescription className="text-text-muted">
                   {t("login.description")}
@@ -125,6 +128,8 @@ export const Login = () => {
                       placeholder={t("login.usernamePlaceholder")}
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
+                      aria-invalid={Boolean(error)}
+                      aria-describedby={error ? "login-error" : undefined}
                       required
                       className="bg-bg-surface py-4 border-border-input h-auto"
                     />
@@ -142,6 +147,8 @@ export const Login = () => {
                         placeholder={t("login.passwordPlaceholder")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        aria-invalid={Boolean(error)}
+                        aria-describedby={error ? "login-error" : undefined}
                         required
                         className="bg-bg-surface py-4 pr-9 border-border-input h-auto"
                       />
@@ -150,15 +157,18 @@ export const Login = () => {
                         variant="ghost"
                         size="icon-xs"
                         onClick={() => setShowPassword((prev) => !prev)}
+                        aria-pressed={showPassword}
                         aria-label={
-                          showPassword ? "Hide password" : "Show password"
+                          showPassword
+                            ? t("login.hidePassword")
+                            : t("login.showPassword")
                         }
                         className="top-1/2 right-1.5 absolute text-text-muted hover:text-text-primary -translate-y-1/2 cursor-pointer"
                       >
                         {showPassword ? (
-                          <EyeOff className="size-4" />
+                          <EyeOff className="size-4" aria-hidden="true" />
                         ) : (
-                          <Eye className="size-4" />
+                          <Eye className="size-4" aria-hidden="true" />
                         )}
                       </Button>
                     </div>
@@ -166,7 +176,7 @@ export const Login = () => {
                       <button
                         type="button"
                         onClick={() => navigate("/forgot-password")}
-                        className="font-medium text-primary hover:text-primary-hover text-xs hover:underline cursor-pointer"
+                        className="inline-flex items-center py-1.5 min-h-6 font-medium text-primary hover:text-primary-hover text-xs hover:underline cursor-pointer"
                       >
                         {t("login.forgotPassword")}
                       </button>
@@ -175,10 +185,11 @@ export const Login = () => {
 
                   {error && (
                     <Alert
+                      id="login-error"
                       variant="destructive"
                       className="bg-danger-bg-hover border-danger-border text-danger-text"
                     >
-                      <CircleAlert className="size-4" />
+                      <CircleAlert className="size-4" aria-hidden="true" />
                       <AlertDescription className="text-danger-text">
                         {error}
                       </AlertDescription>
@@ -191,7 +202,7 @@ export const Login = () => {
                     disabled={isSubmitting}
                     className="bg-primary hover:bg-primary-hover py-4 w-full h-auto text-text-inverse cursor-pointer"
                   >
-                    <LogIn className="size-4" />
+                    <LogIn className="size-4" aria-hidden="true" />
                     <span>
                       {isSubmitting ? t("login.submitting") : t("login.submit")}
                     </span>
@@ -209,7 +220,7 @@ export const Login = () => {
                     onClick={showDemoAlert}
                     className="hover:bg-primary-light py-4 border-border-input w-full h-auto text-text-primary cursor-pointer"
                   >
-                    <UserPlus className="size-4" />
+                    <UserPlus className="size-4" aria-hidden="true" />
                     <span>{t("login.register")}</span>
                   </Button>
                 </CardFooter>

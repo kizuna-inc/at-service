@@ -25,7 +25,7 @@ export const ForgotPassword = () => {
         <Card className="bg-bg-surface shadow-card border border-border w-full max-w-lg">
           <CardHeader>
             <CardTitle className="font-bold text-text-primary text-xl">
-              {t("forgotPassword.title")}
+              <h1>{t("forgotPassword.title")}</h1>
             </CardTitle>
             <CardDescription className="text-text-muted">
               {t("forgotPassword.description")}
@@ -33,7 +33,7 @@ export const ForgotPassword = () => {
           </CardHeader>
           <CardContent>
             <Alert className="bg-info-bg border-primary-border text-text-primary">
-              <KeyRound className="size-4 text-primary" />
+              <KeyRound className="size-4 text-primary" aria-hidden="true" />
               <AlertTitle className="font-semibold text-text-primary">
                 {t("forgotPassword.testAccountsTitle")}
               </AlertTitle>
@@ -73,7 +73,7 @@ export const ForgotPassword = () => {
               onClick={() => navigate("/login")}
               className="bg-primary hover:bg-primary-hover py-4 w-full h-auto text-text-inverse cursor-pointer"
             >
-              <ArrowLeft className="size-4" />
+              <ArrowLeft className="size-4" aria-hidden="true" />
               <span>{t("forgotPassword.backToLogin")}</span>
             </Button>
           </CardFooter>

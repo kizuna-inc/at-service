@@ -172,99 +172,103 @@ export const ProfileView = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-bg-surface shadow-card border border-border">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-semibold text-text-primary text-base">
-                <Phone className="size-4 text-primary" />
-                <span>{t("dashboard.profile.emergencyTitle")}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="gap-4 grid grid-cols-1 sm:grid-cols-3">
-              <div className="bg-bg-subtle/60 p-3.5 border border-border rounded-lg">
-                <p className="text-text-muted text-xs">
-                  {t("dashboard.profile.emergencyNameLabel")}
-                </p>
-                <p className="mt-1 font-medium text-text-primary text-sm">
-                  {profile.emergencyContact.name[locale]}
-                </p>
-              </div>
-              <div className="bg-bg-subtle/60 p-3.5 border border-border rounded-lg">
-                <p className="text-text-muted text-xs">
-                  {t("dashboard.profile.emergencyRelationLabel")}
-                </p>
-                <p className="mt-1 font-medium text-text-primary text-sm">
-                  {profile.emergencyContact.relation[locale]}
-                </p>
-              </div>
-              <div className="bg-bg-subtle/60 p-3.5 border border-border rounded-lg">
-                <p className="text-text-muted text-xs">
-                  {t("dashboard.profile.emergencyPhoneLabel")}
-                </p>
-                <p className="mt-1 font-medium text-text-primary text-sm">
-                  {profile.emergencyContact.phone}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-bg-surface shadow-card border border-border">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 font-semibold text-text-primary text-base">
-                <Laptop className="size-4 text-primary" />
-                <span>{t("dashboard.profile.assistiveTitle")}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-5">
-              <div className="space-y-2">
-                <p className="text-text-muted text-xs">
-                  {t("dashboard.profile.needsLabel")}
-                </p>
-                {profile.assistiveNeeds.length === 0 ? (
-                  <p className="text-text-muted text-sm">
-                    {t("dashboard.profile.noNeeds")}
+          {profile.role === "user" && profile.emergencyContact && (
+            <Card className="bg-bg-surface shadow-card border border-border">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 font-semibold text-text-primary text-base">
+                  <Phone className="size-4 text-primary" />
+                  <span>{t("dashboard.profile.emergencyTitle")}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="gap-4 grid grid-cols-1 sm:grid-cols-3">
+                <div className="bg-bg-subtle/60 p-3.5 border border-border rounded-lg">
+                  <p className="text-text-muted text-xs">
+                    {t("dashboard.profile.emergencyNameLabel")}
                   </p>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {profile.assistiveNeeds.map((need) => (
-                      <span
-                        key={need.en}
-                        className="bg-primary-light px-3 py-1 rounded-full font-medium text-primary text-xs"
-                      >
-                        {need[locale]}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <p className="text-text-muted text-xs">
-                  {t("dashboard.profile.devicesLabel")}
-                </p>
-                {profile.assignedDevices.length === 0 ? (
-                  <p className="text-text-muted text-sm">
-                    {t("dashboard.profile.noDevices")}
+                  <p className="mt-1 font-medium text-text-primary text-sm">
+                    {profile.emergencyContact.name[locale]}
                   </p>
-                ) : (
-                  <div className="gap-3 grid grid-cols-1 sm:grid-cols-2">
-                    {profile.assignedDevices.map((device) => (
-                      <div
-                        key={device.code}
-                        className="flex items-center gap-3 bg-bg-subtle/60 p-3.5 border border-border rounded-lg"
-                      >
-                        <span className="bg-bg-surface px-2 py-0.5 border border-border rounded font-mono text-text-muted text-xs">
-                          {device.code}
+                </div>
+                <div className="bg-bg-subtle/60 p-3.5 border border-border rounded-lg">
+                  <p className="text-text-muted text-xs">
+                    {t("dashboard.profile.emergencyRelationLabel")}
+                  </p>
+                  <p className="mt-1 font-medium text-text-primary text-sm">
+                    {profile.emergencyContact.relation[locale]}
+                  </p>
+                </div>
+                <div className="bg-bg-subtle/60 p-3.5 border border-border rounded-lg">
+                  <p className="text-text-muted text-xs">
+                    {t("dashboard.profile.emergencyPhoneLabel")}
+                  </p>
+                  <p className="mt-1 font-medium text-text-primary text-sm">
+                    {profile.emergencyContact.phone}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {profile.role === "user" && (
+            <Card className="bg-bg-surface shadow-card border border-border">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 font-semibold text-text-primary text-base">
+                  <Laptop className="size-4 text-primary" />
+                  <span>{t("dashboard.profile.assistiveTitle")}</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <div className="space-y-2">
+                  <p className="text-text-muted text-xs">
+                    {t("dashboard.profile.needsLabel")}
+                  </p>
+                  {(profile.assistiveNeeds ?? []).length === 0 ? (
+                    <p className="text-text-muted text-sm">
+                      {t("dashboard.profile.noNeeds")}
+                    </p>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {(profile.assistiveNeeds ?? []).map((need) => (
+                        <span
+                          key={need.en}
+                          className="bg-primary-light px-3 py-1 rounded-full font-medium text-primary text-xs"
+                        >
+                          {need[locale]}
                         </span>
-                        <span className="font-medium text-text-primary text-sm">
-                          {device.name[locale]}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-text-muted text-xs">
+                    {t("dashboard.profile.devicesLabel")}
+                  </p>
+                  {(profile.assignedDevices ?? []).length === 0 ? (
+                    <p className="text-text-muted text-sm">
+                      {t("dashboard.profile.noDevices")}
+                    </p>
+                  ) : (
+                    <div className="gap-3 grid grid-cols-1 sm:grid-cols-2">
+                      {(profile.assignedDevices ?? []).map((device) => (
+                        <div
+                          key={device.code}
+                          className="flex items-center gap-3 bg-bg-subtle/60 p-3.5 border border-border rounded-lg"
+                        >
+                          <span className="bg-bg-surface px-2 py-0.5 border border-border rounded font-mono text-text-muted text-xs">
+                            {device.code}
+                          </span>
+                          <span className="font-medium text-text-primary text-sm">
+                            {device.name[locale]}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       )}
     </div>

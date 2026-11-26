@@ -5,6 +5,7 @@ import {
   ClipboardCheck,
   LayoutDashboard,
   Settings,
+  User,
   Wrench,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -52,6 +53,11 @@ export const StaffDashboard = () => {
       to: "/dashboard/staff/reports",
       label: t("dashboard.staff.menu.reports"),
       icon: BarChart2,
+    },
+    {
+      to: "/dashboard/staff/profile",
+      label: t("dashboard.staff.menu.profile"),
+      icon: User,
     },
     {
       to: "/dashboard/staff/settings",
