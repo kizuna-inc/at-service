@@ -12,6 +12,7 @@ import { KnowledgeView } from "@/pages/Dashboard/user/knowledge";
 import { RepairServicesView } from "@/pages/Dashboard/user/repair";
 import { ReportsView } from "@/pages/Dashboard/user/reports";
 import { SettingsView } from "@/pages/Dashboard/user/settings";
+import { ProfileView } from "@/pages/Dashboard/profile";
 
 export const userDashboardRoutes: RouteObject[] = [
   {
@@ -30,6 +31,7 @@ export const userDashboardRoutes: RouteObject[] = [
         element: <KnowledgeArticleView />,
       },
       { path: "reports", element: <ReportsView /> },
+      { path: "profile", element: <ProfileView /> },
       { path: "settings", element: <SettingsView /> },
     ],
   },

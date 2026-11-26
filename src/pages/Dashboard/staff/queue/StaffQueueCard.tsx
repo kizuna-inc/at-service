@@ -1,5 +1,6 @@
 import { ClipboardCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +19,7 @@ const STATUS_BADGE_MAP: Record<StaffQueueStatus, string> = {
 
 export const StaffQueueCard = ({ items }: { items: StaffQueueItem[] }) => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const locale: Locale = i18n.language === "en" ? "en" : "th";
 
   return (
@@ -40,26 +42,30 @@ export const StaffQueueCard = ({ items }: { items: StaffQueueItem[] }) => {
               </p>
               <p className="text-text-muted text-xs">{item.meta[locale]}</p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span
                 className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
               >
                 {t(`dashboard.status.${item.status}`)}
               </span>
+              {item.status === "pending" && (
+                <Button
+                  type="button"
+                  size="xs"
+                  onClick={showDemoAlert}
+                  className="bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
+                >
+                  {t("dashboard.staff.actionAccept")}
+                </Button>
+              )}
               <Button
                 type="button"
                 size="xs"
-                variant={item.status === "pending" ? "default" : "outline"}
-                onClick={showDemoAlert}
-                className={
-                  item.status === "pending"
-                    ? "bg-primary hover:bg-primary-hover text-text-inverse cursor-pointer"
-                    : "border-border-input hover:bg-primary-light text-text-primary cursor-pointer"
-                }
+                variant="outline"
+                onClick={() => navigate(`/dashboard/staff/queue/${item.id}`)}
+                className="border-border-input hover:bg-primary-light text-text-primary cursor-pointer"
               >
-                {item.status === "pending"
-                  ? t("dashboard.staff.actionAccept")
-                  : t("dashboard.staff.actionView")}
+                {t("dashboard.staff.actionView")}
               </Button>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Globe, LogIn, LogOut, Search, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { showDemoAlert } from "@/modules/demoAlert";
@@ -78,14 +79,14 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="bg-brand-navy w-full">
-      <div className="flex flex-row justify-between items-center mx-auto py-4 w-95/100 md:w-9/10 h-16">
+    <div className="flex flex-col bg-brand-navy">
+      <div className="flex flex-row justify-between items-center gap-4 md:gap-0 mx-auto py-4 w-9/10 md:w-8/10 h-fit md:h-16">
         <div className="flex justify-start items-center w-fit">
           <a href="#" className="hover:opacity-60 font-bold text-white">
             <span className="text-brand-accent">AT</span> Care Connect
           </a>
         </div>
-        <div className="flex justify-end items-center gap-2 w-fit">
+        <div className="flex flex-row flex-wrap justify-end items-center gap-2 w-fit">
           <Button
             type="button"
             variant="ghost"
@@ -109,28 +110,19 @@ export const Navbar = () => {
           </Button>
           <AccessibilityMenu />
           {!isLoggedIn ? (
-            <Button
-              type="button"
-              size="sm"
-              onClick={() => navigate("/login")}
-              className="flex justify-center items-center bg-primary hover:bg-primary-hover min-w-22 text-text-inverse cursor-pointer"
-            >
-              <LogIn className="size-4" />
-              <span>{t("nav.login")}</span>
-            </Button>
+            <>
+              <Button
+                type="button"
+                size="sm"
+                onClick={() => navigate("/login")}
+                className="flex justify-center items-center bg-primary hover:bg-primary-hover min-w-22 text-text-inverse cursor-pointer"
+              >
+                <LogIn className="size-4" />
+                <span>{t("nav.login")}</span>
+              </Button>
+            </>
           ) : (
             <>
-              {userDetail && (
-                <div className="flex items-center gap-2 bg-brand-navy-hover px-2.5 py-1 rounded-md text-text-inverse text-sm">
-                  <User className="size-4 text-brand-accent shrink-0" />
-                  <span className="max-w-36 font-medium truncate">
-                    {userDetail.detail.name}
-                  </span>
-                  <span className="bg-primary/20 px-1.5 py-0.5 rounded font-medium text-brand-accent text-xs">
-                    {t(`roles.${userDetail.detail.role}`)}
-                  </span>
-                </div>
-              )}
               <Button
                 type="button"
                 size="sm"
@@ -140,6 +132,20 @@ export const Navbar = () => {
                 <LogOut className="size-4" />
                 <span className="hidden md:block">{t("nav.logout")}</span>
               </Button>
+              {userDetail && (
+                <Link
+                  to={`/dashboard/${userDetail.detail.role}/profile`}
+                  className="flex justify-end md:justify-normal items-center gap-2 bg-brand-navy-hover px-2.5 py-1 rounded-md text-text-inverse text-sm"
+                >
+                  <User className="size-4 text-brand-accent shrink-0" />
+                  <span className="max-w-36 font-medium truncate">
+                    {userDetail.detail.name}
+                  </span>
+                  <span className="bg-primary/20 px-1.5 py-0.5 rounded font-medium text-brand-accent text-xs">
+                    {t(`roles.${userDetail.detail.role}`)}
+                  </span>
+                </Link>
+              )}
             </>
           )}
         </div>

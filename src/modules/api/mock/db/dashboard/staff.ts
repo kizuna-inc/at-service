@@ -18,6 +18,28 @@ export const mock_staff_queue_db: StaffQueueItem[] = [
       th: "ความสำคัญ: ปกติ · ส่งคำขอเมื่อ 30 นาทีที่แล้ว",
     },
     status: "pending",
+    requesterName: {
+      en: "Thanakorn Chanphen",
+      th: "ธนกร จันทร์เพ็ญ",
+    },
+    requesterId: "f2b2c3d4-6666-4666-8666-000000000002",
+    priority: "normal",
+    device: {
+      en: "Voice Input Kit & Screen Reader (#AT-205)",
+      th: "ชุดสั่งการด้วยเสียงและโปรแกรมอ่านหน้าจอ (#AT-205)",
+    },
+    location: {
+      en: "Room B2 · Assistive Tech Lab",
+      th: "ห้อง B2 · ศูนย์เทคโนโลยีสิ่งอำนวยความสะดวก",
+    },
+    requestedAt: {
+      en: "26 Nov 2026 · 11:15",
+      th: "26 พ.ย. 2569 · 11:15 น.",
+    },
+    description: {
+      en: "User reported screen reader voice feedback lagging during coursework. Needs speech rate calibration and microphone profile check.",
+      th: "ผู้ใช้งานแจ้งว่าเสียงอ่านหน้าจอหน่วงระหว่างเรียนออนไลน์ ต้องการปรับเทียบความเร็วเสียงและตรวจสอบโปรไฟล์ไมโครโฟน",
+    },
   },
   {
     id: "e1b2c3d4-5555-4555-8555-000000000002",
@@ -30,6 +52,27 @@ export const mock_staff_queue_db: StaffQueueItem[] = [
       th: "มอบหมายให้คุณ · กำหนดส่งวันนี้ 15:00",
     },
     status: "inProgress",
+    requesterName: {
+      en: "Somying Jaidee",
+      th: "สมหญิง ใจดี",
+    },
+    priority: "urgent",
+    device: {
+      en: "Power Wheelchair Joystick (#AT-089)",
+      th: "จอยสติ๊กรถเข็นไฟฟ้า (#AT-089)",
+    },
+    location: {
+      en: "On-site visit · Bang Khen",
+      th: "ลงพื้นที่ · เขตบางเขน",
+    },
+    requestedAt: {
+      en: "26 Nov 2026 · 09:40",
+      th: "26 พ.ย. 2569 · 09:40 น.",
+    },
+    description: {
+      en: "Left-turn joystick drift observed during indoor movement. Scheduled for bench diagnostics and deadzone recalibration before 15:00.",
+      th: "พบอาการจอยสติ๊กเลี้ยวซ้ายคลาดเคลื่อนขณะใช้งานในอาคาร กำหนดตรวจเช็กและปรับเทียบค่าศูนย์ก่อนเวลา 15:00 น.",
+    },
   },
   {
     id: "e1b2c3d4-5555-4555-8555-000000000003",
@@ -42,6 +85,28 @@ export const mock_staff_queue_db: StaffQueueItem[] = [
       th: "ยืนยันการส่งมอบแล้ว · 11:20",
     },
     status: "completed",
+    requesterName: {
+      en: "Anan Sukjai",
+      th: "อนันต์ สุขใจ",
+    },
+    requesterId: "f2b2c3d4-6666-4666-8666-000000000003",
+    priority: "normal",
+    device: {
+      en: "Large Print Display Kit (#AT-308)",
+      th: "ชุดจอภาพอักษรขนาดใหญ่ (#AT-308)",
+    },
+    location: {
+      en: "Front Desk · Service Center",
+      th: "เคาน์เตอร์บริการ · ศูนย์ช่วยเหลือ",
+    },
+    requestedAt: {
+      en: "26 Nov 2026 · 08:50",
+      th: "26 พ.ย. 2569 · 08:50 น.",
+    },
+    description: {
+      en: "Completed intake check, contrast profile setup, and keyboard switch verification. Handover signed off by user at front desk.",
+      th: "ตรวจรับอุปกรณ์ ตั้งค่าโปรไฟล์ความคมชัด และทดสอบปุ่มกดนูนเสร็จสิ้น ผู้ใช้งานเซ็นรับมอบเรียบร้อยแล้ว",
+    },
   },
 ];
 

@@ -4,6 +4,7 @@ import {
   FileText,
   Home,
   Settings,
+  User,
   Users,
   Wrench,
 } from "lucide-react";
@@ -52,6 +53,11 @@ export const UserDashboard = () => {
       to: "/dashboard/user/reports",
       label: t("dashboard.user.menu.reports"),
       icon: BarChart2,
+    },
+    {
+      to: "/dashboard/user/profile",
+      label: t("dashboard.user.menu.profile"),
+      icon: User,
     },
     {
       to: "/dashboard/user/settings",

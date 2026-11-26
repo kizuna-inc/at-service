@@ -28,6 +28,18 @@ export const getStaffQueue = async (): Promise<
   return ApiResponse.ok(mock_staff_queue_db, "Staff queue fetched", 200);
 };
 
+export const getStaffQueueById = async (
+  id: string,
+): Promise<ApiResponse<StaffQueueItem>> => {
+  const found = mock_staff_queue_db.find((item) => item.id === id);
+
+  if (!found) {
+    return ApiResponse.error<StaffQueueItem>("Queue item not found", 404);
+  }
+
+  return ApiResponse.ok(found, "Queue item fetched", 200);
+};
+
 export const getStaffRepairs = async (): Promise<
   ApiResponse<StaffRepairItem[]>
 > => {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserPlus, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,6 +20,7 @@ const STATUS_BADGE_MAP: Record<UserStatus, string> = {
 
 export const UsersView = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const locale: Locale = i18n.language === "en" ? "en" : "th";
   const [filter, setFilter] = useState<FilterStatus>("all");
   const [items, setItems] = useState<AdminUserItem[]>([]);
@@ -113,11 +115,22 @@ export const UsersView = () => {
                   </p>
                 </div>
               </div>
-              <span
-                className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
-              >
-                {t(`dashboard.status.${item.status}`)}
-              </span>
+              <div className="flex items-center gap-2">
+                <span
+                  className={`px-2.5 py-0.5 rounded-full font-medium text-xs ${STATUS_BADGE_MAP[item.status]}`}
+                >
+                  {t(`dashboard.status.${item.status}`)}
+                </span>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => navigate(`/dashboard/admin/${item.id}`)}
+                  className="border-border-input hover:bg-primary-light text-text-primary cursor-pointer"
+                >
+                  {t("dashboard.admin.pages.users.viewProfile")}
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}

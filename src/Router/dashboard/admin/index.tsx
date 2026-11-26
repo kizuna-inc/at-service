@@ -11,6 +11,7 @@ import { KnowledgeView } from "@/pages/Dashboard/user/knowledge";
 import { KnowledgeArticleView } from "@/pages/Dashboard/user/knowledge/ArticleView";
 import { NewArticleView } from "@/pages/Dashboard/user/knowledge/NewArticleView";
 import { SettingsView } from "@/pages/Dashboard/user/settings";
+import { ProfileView } from "@/pages/Dashboard/profile";
 
 export const adminDashboardRoutes: RouteObject[] = [
   {
@@ -26,6 +27,7 @@ export const adminDashboardRoutes: RouteObject[] = [
       { path: "knowledge/:articleId", element: <KnowledgeArticleView /> },
       { path: "reports", element: <AdminReportsView /> },
       { path: "settings", element: <SettingsView /> },
+      { path: ":userId", element: <ProfileView /> },
     ],
   },
 ];

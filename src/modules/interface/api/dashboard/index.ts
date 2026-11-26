@@ -86,6 +86,13 @@ export interface StaffQueueItem {
   title: LocalizedText;
   meta: LocalizedText;
   status: StaffQueueStatus;
+  requesterName: LocalizedText;
+  requesterId?: string;
+  priority: "normal" | "urgent";
+  device: LocalizedText;
+  location: LocalizedText;
+  requestedAt: LocalizedText;
+  description: LocalizedText;
 }
 
 export interface StaffOverviewData {
