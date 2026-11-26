@@ -135,10 +135,10 @@ export const Navbar = () => {
                 type="button"
                 size="sm"
                 onClick={handleLogout}
-                className="flex justify-center items-center bg-danger-text hover:bg-danger-text/90 w-31.25 min-w-22 text-text-inverse cursor-pointer"
+                className="flex justify-center items-center bg-danger-text hover:bg-danger-text/90 w-fit md:w-31.25 md:min-w-22 aspect-square md:aspect-auto text-text-inverse cursor-pointer"
               >
                 <LogOut className="size-4" />
-                <span>{t("nav.logout")}</span>
+                <span className="hidden md:block">{t("nav.logout")}</span>
               </Button>
             </>
           )}
